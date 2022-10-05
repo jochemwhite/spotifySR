@@ -1,0 +1,50 @@
+{
+  tags: {
+    'badge-info': { subscriber: '30' },
+    badges: { broadcaster: '1', subscriber: '0', premium: '1' },
+    color: '#FFFFFF',
+    'display-name': 'Jochemwhite',
+    emotes: null,
+    'first-msg': '0',
+    id: '8c6d8a02-29a3-460d-8f7b-9bcc6442b769',
+    mod: '0',
+    'returning-chatter': '0',
+    'room-id': '122604941',
+    subscriber: '1',
+    'tmi-sent-ts': '1664972160547',
+    turbo: '0',
+    'user-id': '122604941',
+    'user-type': null
+  },
+  source: {
+    nick: 'jochemwhite',
+    host: 'jochemwhite@jochemwhite.tmi.twitch.tv'
+  },
+  command: { command: 'PRIVMSG', channel: '#jochemwhite' },
+  parameters: 'test message'
+}
+{
+  tags: {
+    'badge-info': { subscriber: '30' },
+    badges: { broadcaster: '1', subscriber: '0', premium: '1' },
+    color: '#FFFFFF',
+    'display-name': 'Jochemwhite',
+    emotes: null,
+    'first-msg': '0',
+    id: '8c6d8a02-29a3-460d-8f7b-9bcc6442b769',
+    mod: '0',
+    'returning-chatter': '0',
+    'room-id': '122604941',
+    subscriber: '1',
+    'tmi-sent-ts': '1664972160547',
+    turbo: '0',
+    'user-id': '122604941',
+    'user-type': null
+  },
+  source: {
+    nick: 'jochemwhite',
+    host: 'jochemwhite@jochemwhite.tmi.twitch.tv'
+  },
+  command: { command: 'PRIVMSG', channel: '#jochemwhite' },
+  parameters: 'test message'
+}

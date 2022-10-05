@@ -1,5 +1,5 @@
 function handleMessage(message: string) {
-    // console.log(message);
+    // console.log("hit on handleMessage");
   
     let parsedMessage: any = {
       // Contains the component parts.
@@ -53,10 +53,11 @@ function handleMessage(message: string) {
       idx = endIdx + 1; // Should point to the parameters part of the message.
       rawParametersComponent = message.slice(idx);
     }
+
   
     parsedMessage.command = parseCommand(rawCommandComponent);
   
-    // console.log(parsedMessage.command);
+    
   
     if (null == parsedMessage.command) {
       // Is null if it's a message we don't care about.
@@ -67,7 +68,9 @@ function handleMessage(message: string) {
         parsedMessage.tags = parseTags(rawTagsComponent);
       }
       parsedMessage.source = parseSource(rawSourceComponent);
-      parsedMessage.parameters = rawParametersComponent;
+
+      parsedMessage.parameters = rawParametersComponent?.replace(/(\r\n|\n|\r)/gm, "")
+
       if (rawParametersComponent && rawParametersComponent[0] === "!") {
         // The user entered a bot command in the chat window.
         parsedMessage.command = parseParameters(
@@ -76,6 +79,7 @@ function handleMessage(message: string) {
         );
       }
     }
+    // console.log(parsedMessage);
     return parsedMessage;
   }
   
@@ -159,6 +163,7 @@ function handleMessage(message: string) {
   }
   
   function parseParameters(rawParametersComponent: string, command: any) {
+
     let idx = 0;
     let commandParts = rawParametersComponent.slice(idx + 1).trim();
     let paramsIdx = commandParts.indexOf(" ");
@@ -169,18 +174,24 @@ function handleMessage(message: string) {
     } else {
       command.botCommand = commandParts.slice(0, paramsIdx);
       command.botCommandParams = commandParts.slice(paramsIdx).trim();
+
+    
       // TODO: remove extra spaces in parameters string
     }
-  
+    // console.log(command)
     return command;
   }
   
+
+  //get the user information
   function parseSource(rawSourceComponent: any) {
+    // console.log("hit on parseSource");
     if (null == rawSourceComponent) {
       // Not all messages contain a source
       return null;
     } else {
       let sourceParts = rawSourceComponent.split("!");
+      // console.log(sourceParts);
       return {
         nick: sourceParts.length == 2 ? sourceParts[0] : null,
         host: sourceParts.length == 2 ? sourceParts[1] : sourceParts[0],
@@ -188,7 +199,10 @@ function handleMessage(message: string) {
     }
   }
   
+
+  //creates a object for all the tags
   function parseTags(tags: any) {
+    // console.log('hit on parseTags');
     // badge-info=;badges=broadcaster/1;color=#0000FF;...
   
     const tagsToIgnore = {
@@ -271,7 +285,6 @@ function handleMessage(message: string) {
           }
       }
     });
-  
     return dictParsedTags;
   }
 

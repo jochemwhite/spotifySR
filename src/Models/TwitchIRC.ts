@@ -9,7 +9,7 @@ export class TwitchIRC {
     this.socket = new WebSocket("wss://irc-ws.chat.twitch.tv:443");
 
     this.connect();
-    this.message();
+    // this.message();
   }
 
   connect() {
@@ -35,26 +35,33 @@ export class TwitchIRC {
     this.send(`PRIVMSG #jochemwhite :${message}`);
   }
 
-  message() {
-    this.socket.on("message", (ircMessage) => {
-      let msg = ircMessage.toString();
-      console.log(msg);
-      let message = handleMessage(msg);
-
-      // console.log(message);
-    });
-  }
-  // onMessage(callback: (message: string) => void) {
-  //   this.socket.on("message", (ircMessage: any) => {
-  //     console.log("message");
-  //     console.log(ircMessage.type)
-
-  //     callback(ircMessage.toString());
+  // message() {
+  //   this.socket.on("message", (ircMessage) => {
+  //     let msg = ircMessage.toString();
+  //     let message = handleMessage(msg);
+  //     console.log(message);
   //   });
   // }
+  onMessage(callback: (message: string, user: string) => void) {
+    this.socket.on("message", async (ircMessage: any) => {
+      let msg = ircMessage.toString();
+      let object: any = await handleMessage(msg);
+
+      try {
+        if (object.command.command === "PRIVMSG") {
+          let user = object.tags["display-name"];
+          let message = object.parameters;
+
+          callback(message, user);
+        }
+      } catch (e) {
+        return;
+      }
+    });
+  }
 }
 
 let twitchIRC = new TwitchIRC();
-
-
-
+twitchIRC.onMessage((message, user) => {
+  console.log(`${user}: ${message}`);
+});
