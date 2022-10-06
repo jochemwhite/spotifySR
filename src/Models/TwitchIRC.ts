@@ -2,7 +2,7 @@ import handleMessage from "../Functions/TwitchMessageParser";
 import WebSocket from "ws";
 // import parseMessage from "../Functions/TwitchMessageParser";
 
-export class TwitchIRC {
+export class ChatClient {
   socket: WebSocket;
 
   constructor() {
@@ -34,18 +34,15 @@ export class TwitchIRC {
   send_message(message: string) {
     this.send(`PRIVMSG #jochemwhite :${message}`);
   }
-
-  // message() {
-  //   this.socket.on("message", (ircMessage) => {
-  //     let msg = ircMessage.toString();
-  //     let message = handleMessage(msg);
-  //     console.log(message);
-  //   });
-  // }
-  onMessage(callback: (message: string, user: string) => void) {
+  async onMessage(callback: (message: string, user: string) => void) {
     this.socket.on("message", async (ircMessage: any) => {
       let msg = ircMessage.toString();
       let object: any = await handleMessage(msg);
+      // console.log(object);
+
+      // if (object.command.command === "PING") {
+      //   this.send("PONG :tmi.twitch.tv");
+      // }
 
       try {
         if (object.command.command === "PRIVMSG") {
@@ -60,8 +57,3 @@ export class TwitchIRC {
     });
   }
 }
-
-let twitchIRC = new TwitchIRC();
-twitchIRC.onMessage((message, user) => {
-  console.log(`${user}: ${message}`);
-});

@@ -1,11 +1,8 @@
-// import { Router } from "express";
+import { Router } from "express";
+import { Login, Callback } from "../Controllers/spotify";
+const router = Router();
 
-// import { spotify } from "../controllers/spotify";
+router.get("/login", Login);
+router.get("/callback", Callback);
 
-// const router = Router();
-
-// router.get("/login", spotify.login);
-// router.get("/callback", spotify.callback);
-// router.get("/refresh_token", spotify.refreshToken);
-
-// export default router;
+export default router;

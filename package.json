@@ -34,5 +34,4 @@
     "@types/websocket": "^1.0.5",
     "@types/ws": "^8.5.3"
   }
-  
 }
