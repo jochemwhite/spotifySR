@@ -9,41 +9,8 @@ export class SpotifyWebApi {
     this.accessToken = accessToken;
     this.refresh_token = refresh_token;
 
-    this.refreshAccessToken();
   }
 
-  private refreshAccessToken() {
-    //create a 1 hour interval to refresh the access token
-    setInterval(async () => {
-      console.log("refreshing access token");
-
-      const headers: any = {
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        auth: {
-          username: client_id,
-          password: client_secret,
-        },
-      };
-      const data = {
-        grant_type: "refresh_token",
-        refresh_token: this.refresh_token,
-      };
-      try {
-        const response = await axios.post(
-          "https://accounts.spotify.com/api/token",
-          qs.stringify(data),
-          headers
-        );
-        this.accessToken = response.data.access_token;
-      } catch (error) {
-        console.log(error);
-      }
-      console.log("access token refreshed");
-    }, 3600000);
-  }
 
 
   public async getCurrentlyPlaying() {

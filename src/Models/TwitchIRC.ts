@@ -12,6 +12,7 @@ export class ChatClient {
     // this.message();
   }
 
+  //conntect to twitch IRC
   connect() {
     this.socket.on("open", () => {
       console.log("Connected to Twitch IRC");
@@ -21,19 +22,25 @@ export class ChatClient {
       );
       this.send("PASS oauth:wt7sxf77jnhdi8hlrowvtd5sy431b6");
       this.send("NICK jochemwhite");
-      this.send("JOIN #jochemwhite");
-
-      this.send_message("the bot is now online!");
     });
   }
 
+  //sending a RAW message the the IRC
   private send(message: string) {
     this.socket.send(message);
   }
 
-  send_message(message: string) {
-    this.send(`PRIVMSG #jochemwhite :${message}`);
+  join(channel: string) {
+    this.send(`JOIN #${channel}`);
+
+    this.send_message(channel, "Jochemwhite has joined your chat")
   }
+
+  //send message to specific chat room
+  send_message(channel: string, message: string) {
+    this.send(`PRIVMSG #${channel} :${message}`);
+  }
+
   async onMessage(callback: (message: string, user: string) => void) {
     this.socket.on("message", async (ircMessage: any) => {
       let msg = ircMessage.toString();
@@ -57,3 +64,7 @@ export class ChatClient {
     });
   }
 }
+
+const Client = new ChatClient();
+
+export { Client };
