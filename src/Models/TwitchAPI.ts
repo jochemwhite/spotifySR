@@ -1,6 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import dotenv from "dotenv";
-
 dotenv.config();
 
 class TwitchAPI {
@@ -21,17 +20,15 @@ class TwitchAPI {
 
   async GetUsers(accessToken: string, userID: number) {
     try {
-
-      console.log(userID)
       let res = await axios.get(`${this.API}/users?id=${userID}`, {
         headers: this.Headers(accessToken),
       });
 
-      return res.data.data[0]
+      return res.data.data[0];
     } catch (err: any) {
-      // console.log(err)
+      console.log(err);
 
-      return "something when wrong"
+      return "something when wrong";
     }
   }
 }

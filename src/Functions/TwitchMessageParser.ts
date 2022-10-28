@@ -275,6 +275,7 @@ function handleMessage(message: string) {
           let emoteSetIds = tagValue.split(",")!; // Array of emote set IDs.
           dictParsedTags[parsedTag[0]] = emoteSetIds;
           break;
+        
         default:
           // If the tag is in the list of tags to ignore, ignore
           // it; otherwise, add it.

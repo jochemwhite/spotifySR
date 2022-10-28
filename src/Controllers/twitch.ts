@@ -1,16 +1,30 @@
 import axios from "axios";
 import { RequestHandler } from "express";
 import { twitchAPI } from "../Models/TwitchAPI";
-import { Client } from "../Models/TwitchIRC";
+import { ChatClient } from "../Models/TwitchIRC";
+import { DBclient } from "../Models/Database";
+
 
 const joinChannel: RequestHandler = async (req, res) => {
+  console.log(res)
+
   let channelID = req.body.channelID;
   let AccessToken = req.body.accessToken;
 
-  let userData = await twitchAPI.GetUsers(AccessToken, channelID);
-  let userName = userData.login
 
-  Client.join(userName)
+  let userData = await twitchAPI.GetUsers(AccessToken, channelID);
+  let userName = await userData.login
+
+
+  console.log(userData)
+
+  ChatClient.join(userName)
+  await DBclient.joinIRC(channelID)
+
+
+
+
+
 
 
 
