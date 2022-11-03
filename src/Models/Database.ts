@@ -75,9 +75,9 @@ class DB {
       },
     });
     if (!response || !ID) {
-      console.log("errit");
       return false;
     }
+
     return response;
   }
 
@@ -85,8 +85,8 @@ class DB {
   async updateSpotifyToken(channelID: number, accescToken: string) {
     let ID: any = await this.getUser(channelID);
 
-    console.log('running update...')
-    let update = await prisma.spotify.update({
+    console.log("updating database");
+    await prisma.spotify.update({
       where: {
         userId: ID,
       },
@@ -94,8 +94,7 @@ class DB {
         accessToken: accescToken,
       },
     });
-
-    console.log('done', update)
+    return;
   }
 }
 

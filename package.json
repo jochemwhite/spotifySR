@@ -25,6 +25,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.1",
     "querystring": "^0.2.1",
+    "socket.io": "^4.5.3",
     "websocket": "^1.0.34",
     "ws": "^8.9.0"
   },

@@ -67,7 +67,12 @@ class IRCClient {
 
   //listen to all incomming message
   async onMessage(
-    callback: (channel: string, message: string, user: string, channelID: number) => void
+    callback: (
+      channel: string,
+      message: string,
+      user: string,
+      channelID: number
+    ) => void
   ) {
     this.socket.on("message", async (ircMessage: any) => {
       let msg = ircMessage.toString();
@@ -79,7 +84,7 @@ class IRCClient {
             let channel = object.command.channel;
             let user = object.tags["display-name"];
             let message = object.parameters;
-            let channelID = +object.tags['room-id']
+            let channelID = +object.tags["room-id"];
             callback(channel, message, user, channelID);
             break;
           //when we get a ping
@@ -95,14 +100,10 @@ class IRCClient {
             break;
           //when we get banned in a channel
           case "PART":
-            console.log(
-              `${object.tags["display-name"]} has banned ${this.nickname}`
-            );
+            console.log(object);
         }
       } else {
-        
         console.log(msg);
-        console.log("sd");
       }
     });
   }
